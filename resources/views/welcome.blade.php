@@ -76,6 +76,9 @@
                     @endif
                 </div>
             @endif
+            <div class="top links">
+                <a href="/threads">Threads</a>
+            </div>
 
             <div class="content">
                 <div class="title m-b-md">
