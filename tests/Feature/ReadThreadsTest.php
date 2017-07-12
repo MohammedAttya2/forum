@@ -9,6 +9,9 @@ class ReadThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
+    protected $thread;
+
+
     /**
      * @return mixed
      */
@@ -21,17 +24,16 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_browse_threads()
     {
-        $response = $this->get('/threads');
-
-        $response->assertSee($this->thread->title);
+        $this->get('/threads')
+            ->assertSee($this->thread->title);
 
     }
 
     /** @test */
     public function a_user_can_browse_a_single_thread()
     {
-        $response = $this->get('/threads/' . $this->thread->id);
-        $response->assertSee($this->thread->title);
+        $this->get($this->thread->path())
+            ->assertSee($this->thread->title);
 
     }
 
@@ -39,7 +41,7 @@ class ReadThreadsTest extends TestCase
     public function a_user_can_read_replies_associated_with_thread()
     {
         $reply = factory('App\Reply')->create(['thread_id' => $this->thread->id]);
-        $response = $this->get('/threads/' . $this->thread->id);
-        $response->assertSee($reply->body);
+        $this->get($this->thread->path())
+            ->assertSee($reply->body);
     }
 }
