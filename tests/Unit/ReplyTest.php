@@ -11,7 +11,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_has_owner()
     {
-        $reply = factory('App\Reply')->create();
+        $reply = create('App\Reply');
         $this->assertInstanceOf('App\User', $reply->owner);
     }
 }

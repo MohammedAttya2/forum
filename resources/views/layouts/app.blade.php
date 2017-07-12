@@ -37,8 +37,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="/threads">Threads</a>
+                            <a href="/threads">All Threads</a>
                         </li>
+                        @if(auth()->check())
+                            <li>
+                                <a href="/threads/create">Create Thread</a>
+                            </li>
+                        @endif
                     </ul>
                     
                     <!-- Right Side Of Navbar -->
