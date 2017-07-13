@@ -6,20 +6,34 @@ use App\Channel;
 use App\Thread;
 use Illuminate\Http\Request;
 
+/**
+ * Class ThreadsController
+ * @package App\Http\Controllers
+ */
 class ThreadsController extends Controller
 {
+    /**
+     * ThreadsController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
     }
+
     /**
      * Display a listing of the resource.
      *
+     * @param Channel $channel
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Channel $channel)
     {
-        $threads = Thread::latest()->get();
+        if ($channel->exists) {
+            $threads = $channel->threads()->latest()->get();
+        }
+        else {
+            $threads = Thread::latest()->get();
+        }
         return view('threads.index', compact('threads'));
     }
 
@@ -43,7 +57,7 @@ class ThreadsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'title' => 'required|min:5',
             'body' => 'required',
             'channel_id' => 'required|exists:channels,id'
         ]);

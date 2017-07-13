@@ -13,10 +13,19 @@
                         <form action="/threads" method="POST">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                Title: <input type="text" name="title" class="form-control" required>
+                                <label for="channel_id">Choose a Channel:</label>
+                                <select name="channel_id" id="channel_id" class="form-control" required>
+                                    <option value="">Choose one ....</option>
+                                    @foreach (\App\Channel::all() as $channel)
+                                        <option value="{{$channel->id}}" {{ old('channel_id') == $channel->id ? 'selected' : '' }}>{{ $channel->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
-                                Thread: <textarea name="body" id="body" cols="30" rows="10" class="form-control" placeholder="Add your Thoughts">{{ old('body') }}</textarea>
+                                Title: <input type="text" name="title" class="form-control" value="{{ old('title') }}" required>
+                            </div>
+                            <div class="form-group">
+                                Thread: <textarea name="body" id="body" cols="30" rows="10" class="form-control" placeholder="Add your Thoughts" required>{{ old('body') }}</textarea>
                             </div>
                             <div class="form-group">
 
@@ -24,6 +33,17 @@
                                     Publish
                                 </button>
 
+                            </div>
+
+                            <div class="form-group">
+
+                                @if (count($errors))
+                                    <ul class="alert alert-danger">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
                         </form>
                     </div>
