@@ -32,12 +32,11 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Hello
+                        This thread created {{ $thread->created_at->diffForHumans() }} by
+                        <a href="#">{{ $thread->creator->name }}</a>
                     </div>
 
                     <div class="panel-body">
-                        This thread created {{ $thread->created_at->diffForHumans() }} by
-                        <a href="#">{{ $thread->creator->name }}</a>  and currently has
                         {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}.
                     </div>
                 </div>
